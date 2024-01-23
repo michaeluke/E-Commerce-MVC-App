@@ -16,5 +16,7 @@ namespace E_Commerce.Services
 		Task AddProduct(ProductInStore product);
 
 		Task<IEnumerable<CategoryModel>> GetCategories();
+
+		Task<ProductInStore?> GetProductById(int id);
 	}
 }

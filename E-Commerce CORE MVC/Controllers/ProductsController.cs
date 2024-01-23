@@ -1,4 +1,5 @@
-﻿using E_Commerce.Services;
+﻿using E_Commerce.Data.Entities;
+using E_Commerce.Services;
 using E_Commerce.ViewModels.ModelsView;
 using E_Commerce_CORE_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,15 @@ namespace E_Commerce_CORE_MVC.Controllers
 			//this should be in services...
 			var modelView = new AddNewProductViewModel(categories);
 			return View(modelView);
+		}
+
+		[HttpGet]
+
+		public async Task <IActionResult> GetProductById(int id)
+		{
+			var product  = await _productService.GetProductById(id);
+
+			return Json(product);
 		}
 	}
 }

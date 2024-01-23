@@ -41,9 +41,43 @@ namespace E_Commerce.Data.Repository
 
         public async Task AddNewProduct(Product newProduct)
         {
-            _onlineShopDb.Products.Add(newProduct);
 
-            await _onlineShopDb.SaveChangesAsync();
+			// Check if the category already exists
+			var category = await _onlineShopDb.Categories
+				.FirstOrDefaultAsync(c => c.Name == newProduct.Category.Name);
+
+			// If the category doesn't exist, create a new one
+			if (category == null)
+			{
+				category = new Category { Name = newProduct.Name };
+				_onlineShopDb.Categories.Add(category);
+				await _onlineShopDb.SaveChangesAsync();
+			}
+
+			// Add the product to the category
+			newProduct.Category = category;
+
+			// Add the product to the database
+			_onlineShopDb.Products.Add(newProduct);
+
+			await _onlineShopDb.SaveChangesAsync();
+        }
+
+
+        public async Task<Product?> GetProductById(int id)
+        {
+            var SelectedProduct = await _onlineShopDb.Products.FindAsync(id);
+            if (SelectedProduct != null)
+            {
+                return SelectedProduct;
+
+			}
+            else
+            {
+                //TODO Change to not found..
+                return null;
+            }
+			
         }
 
     }

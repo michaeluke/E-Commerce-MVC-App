@@ -1,15 +1,119 @@
 ﻿@model EditProductsViewModel;
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+
+<script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
 
 
 
-@foreach(var category in Model.Categories)
-{
-	<h1>@category.Name</h1>
-}
+
+<!-- Edit product Modal -->
+@* 
+<button id="EditProductModalButton" style="display: none;"
+		data-bs-toggle="modal" data-bs-target="#EditProductModal">
+</button> *@
 
 
-@foreach (var product in Model.Products)
-{
-	<h1>@product.Name</h1>
-}
+
+@* <partial name="_EditProductModalPartial" model="@SelectedProduct" /> *@
+
+<div id="editModal" class="modal">
+	<div class="modal-content">
+		<form id="editForm">
+
+
+			<!-- Your form fields go here -->
+			<button type="submit">Save</button>
+		</form>
+	</div>
+</div>
+
+
+
+<h2>Edit product's Information: </h2>
+
+
+
+<select class="form-select" id="SelctedCategory">
+
+	<option value="">Select a category</option>
+	@foreach (var category in Model.Categories)
+	{
+		<option value=@category.Name>@category.Name</option>
+		<span asp-validation-for="@category.Name" class="text-danger"></span>
+	}
+
+</select>
+
+
+<div class="mt-4">
+	<table id="productsTable" class="bg-white w-100 p-4 rounded-3">
+		<thead>
+			<tr class="bg-light">
+				<th>Name</th>
+				<th>Price</th>
+				<th>In Stock</th>
+				<th>Category</th>
+				<th>Edit/Delete</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var product in Model.Products)
+			{
+				<tr>
+					<td>@product.Name</td>
+					<td>@product.Price</td>
+					<td>@(product.InStock ? "Yes" : "No")</td>
+					<td>@product.Category.Name</td>
+					<td class="d-flex gap-4 w-100">
+						<button class="edit-button" data-product-id="@product.Id">Edit</button>
+					
+						<button class="btn btn-danger text-white">
+							Delete
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
+
+<script>
+	var table = $('#productsTable').DataTable({
+	
+	});
+
+	$('#SelctedCategory').change(function () {
+		var selectedCategory = $(this).val();
+
+		// // Use the 'search' function to filter the table
+		table.column(3).search(selectedCategory).draw();
+	});
+
+	// function ShowEditProduct(productId) {
+
+
+	// 	var EditModalButton = document.getElementById("EditProductModalButton");
+
+	// 	EditModalButton.click();
+
+	// }
+
+	// Step 3: Fetch product data and show the modal
+	$('.edit-button').on('click', function () {
+		var productId = $(this).data('product-id');
+
+		$.get('/Products/GetProductById/' + productId, function (data) {
+			// Populate your form fields with the product data
+			console.log(data)
+			// Then show the modal
+			$('#editModal').show();
+		});
+	});
+	
+
+</script>

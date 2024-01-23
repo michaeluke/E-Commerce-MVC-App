@@ -5,6 +5,8 @@ namespace E_Commerce_CORE_MVC.Models
 {
 	public class ProductInStore
 	{
+
+		public int Id { get; set; }
 		public string Name { get; set; }
 
 		public Decimal Price { get; set; }

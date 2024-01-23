@@ -49,5 +49,13 @@ namespace E_Commerce.Services
 			
 
 		}
+
+		public async Task<ProductInStore?> GetProductById (int id)
+		{
+
+			var SelectedProduct = _mapper.Map<ProductInStore>(await _productsRepository.GetProductById(id));
+			
+			return SelectedProduct;
+		}
 	}
 }
