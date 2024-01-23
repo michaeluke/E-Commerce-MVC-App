@@ -1,0 +1,15 @@
+﻿@model EditProductsViewModel;
+
+
+
+
+@foreach(var category in Model.Categories)
+{
+	<h1>@category.Name</h1>
+}
+
+
+@foreach (var product in Model.Products)
+{
+	<h1>@product.Name</h1>
+}

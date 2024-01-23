@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "Homepage.css",
+	"sources": [
+		"scss/Homepage.scss"
+	],
+	"sourcesContent": [
+		"﻿\r\n.row {\r\n    .productImg {\r\n        height: 100px;\r\n        width: 100px;\r\n    }\r\n}\r\n"
+	],
+	"names": [],
+	"mappings": ";AACA,AACI,IADA,CACA,WAAW,CAAC;EACR,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;CACf"
+}

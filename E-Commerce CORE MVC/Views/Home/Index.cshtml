@@ -1,0 +1,39 @@
+﻿@model HomeViewModel
+@{
+	ViewData["Title"] = "E-Commerce Shop";
+}
+<link rel="stylesheet" href="/css/Homepage.css" />
+
+<h3>Welcome to the best online shopping experiece!</h3>
+
+<div class="row gy-4 mt-4">
+
+
+	@foreach (var product in Model.AllProducts)
+	{
+		<div class="col-md-4">
+			<div class="d-flex flex-column h-100 gap-1 justify-content-between">
+
+				<img src="@product.ImageUrl" class="img-fluid productImg" />
+
+
+				<div class="d-flex flex-column gap-1 mt-2">
+					<h3>
+						@product.Name
+					</h3>
+
+					<span>Price: $@product.Price</span>
+					<span>
+						@(product.InStock == true ? "In Stock" : "Sold Out!")
+					</span>
+					<span>
+						Category : @product.Category.Name
+					</span>
+				</div>
+
+			</div>
+		</div>
+	}
+</div>
+
+

@@ -1,0 +1,171 @@
+﻿@model AddNewProductViewModel;
+
+
+
+
+
+<div class="bg-white pb-4 pt-4">
+
+
+
+	<div class="row">
+
+		<div class="col-md-6 mx-auto">
+			<h1 class="mt-4 mb-2">Add new product here...</h1>
+
+			<form method="post" asp-action="AddNewProduct" asp-controller="Products" id="addProduct">
+				<div class="mb-4 mt-4">
+
+					<select asp-for="NewProduct.Category.Name" class="form-select">
+						
+						@foreach (var category in Model.Categories)
+						{
+
+						
+							<option value=@category.Name>@category.Name</option>
+
+						}
+
+					</select>
+					<span asp-validation-for="NewProduct.Category.Name" class="text-danger"></span>
+			
+					
+
+
+
+				</div>
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.Name, "Name", new { @class = "body-sm-bold mb-2" })
+					@Html.TextBoxFor(m => m.NewProduct.Name, new { @class = "form-control textbox", maxlength = "50", autocomplete = "off" })
+					<span asp-validation-for="NewProduct.Name" class="text-danger"></span>
+				</div>
+
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.Price, "Price", new { @class = "body-sm-bold mb-2" })
+					@Html.TextBoxFor(m => m.NewProduct.Price, new { @class = "form-control textbox", autocomplete = "off" })
+					<span asp-validation-for="NewProduct.Price" class="text-danger"></span>
+				</div>
+
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.InStock, "In Stock?", new { @class = "body-sm-bold mb-2" })
+					<select asp-for="NewProduct.InStock" class="form-select">
+
+
+
+						<option value="@true">yes</option>
+						<option value="@false">No</option>
+
+
+					</select>
+					<span asp-validation-for="NewProduct.InStock" class="text-danger"></span>
+				</div>
+
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.ImageUrl, "Insert Image URl", new { @class = "body-sm-bold mb-2" })
+					@Html.TextBoxFor(m => m.NewProduct.ImageUrl, new { @class = "form-control textbox", autocomplete = "off" })
+					<span asp-validation-for="NewProduct.ImageUrl" class="text-danger"></span>
+
+				</div>
+
+
+
+				<!-- Submit form buttons -->
+
+
+				<div class=" d-flex align-items-center justify-content-center gap-3">
+
+					<button id="Submit-btn" type="submit" class="bg-light">
+						Save
+					</button>
+
+
+					<button id="Cancel-btn" class="bg-white">
+						Cancel
+					</button>
+
+
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+
+
+
+
+</div>
+
+<script>
+	// $(document).ready(() => {
+
+	// // 	$("form").validate({
+	// // 		rules: {
+	// // 			NewProduct_Category: {
+	// // 				required: true
+	// // 			},
+	// // 			NewProduct_Name: {
+	// // 				required: true,
+	// // 				maxlength: 50
+	// // 			},
+	// // 			NewProduct_Price: {
+	// // 				required: true,
+	// // 				number: true
+	// // 			},
+	// // 			NewProduct_InStock: {
+	// // 				required: true
+	// // 			},
+	// // 			NewProduct_ImageUrl: {
+	// // 				required: true,
+	// // 				url: true
+	// // 			}
+	// // 		},
+	// // 		messages: {
+	// // 			NewProduct_Category: {
+	// // 				required: "Please select a category"
+	// // 			},
+	// // 			NewProduct_Name: {
+	// // 				required: "Please enter the product name",
+	// // 				maxlength: "Product name cannot exceed 50 characters"
+	// // 			},
+	// // 			NewProduct_Price: {
+	// // 				required: "Please enter the product price",
+	// // 				number: "Please enter a valid number"
+	// // 			},
+	// // 			NewProduct_InStock: {
+	// // 				required: "Please select if the product is in stock"
+	// // 			},
+	// // 			NewProduct_ImageUrl: {
+	// // 				required: "Please enter the image URL",
+	// // 				url: "Please enter a valid URL"
+	// // 			}
+	// // 		}
+	// // 	});
+	// // });
+	// });
+
+
+	// <!--to prevent submitting form on pressing enter while on input fields-- >
+	// 	$("form").on('keydown', function (event) {
+	// 		// Check if the pressed key is Enter (key code 13)
+	// 		if (event.key === 'Enter' && !event.shiftKey) {
+	// 			// Prevent the default behavior (form submission)
+	// 			event.preventDefault();
+	// 		}
+	// 	});
+
+	// $(".textbox").on('keydown', function (event) {
+	// 	// Check if the pressed key is Enter (key code 13)
+	// 	if (event.key === 'Enter' && event.shiftKey) {
+	// 		// Prevent the default behavior (form submission)
+	// 		event.preventDefault();
+	// 	}
+	// });
+
+</script>
+
+
