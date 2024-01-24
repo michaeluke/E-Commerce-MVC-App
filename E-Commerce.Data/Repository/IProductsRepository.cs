@@ -20,5 +20,8 @@ namespace E_Commerce.Data.Repository
 		Task AddNewProduct(Product newProduct);
 
 		Task <Product?> GetProductById(int id);
+
+
+		Task EditProduct(Product product);
 	}
 }

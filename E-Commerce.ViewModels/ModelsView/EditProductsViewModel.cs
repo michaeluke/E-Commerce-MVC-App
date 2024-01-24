@@ -14,11 +14,24 @@ namespace E_Commerce.ViewModels.ModelsView
 
 		public IEnumerable<CategoryModel> Categories { get; set; }
 
+
+		public ProductInStore? SelectedProduct { get; set; }
+
+		public EditProductsViewModel(IEnumerable<ProductInStore> products, IEnumerable<CategoryModel> categories, ProductInStore? selectedProduct)
+		{
+			Products = products;
+
+			Categories = categories;
+
+			SelectedProduct = selectedProduct;
+		}
+
 		public EditProductsViewModel(IEnumerable<ProductInStore> products, IEnumerable<CategoryModel> categories)
 		{
 			Products = products;
 
 			Categories = categories;
+
 		}
 
 	}

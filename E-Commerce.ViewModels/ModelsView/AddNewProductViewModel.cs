@@ -26,11 +26,12 @@ namespace E_Commerce.ViewModels.ModelsView
         
                 
         }
-        public AddNewProductViewModel()
+        public AddNewProductViewModel(IEnumerable<CategoryModel> categories , ProductInStore SelectedProduct)
         {
+			Categories = categories;
+            NewProduct = SelectedProduct;
 
-            
-        }
+		}
 
     }
 }

@@ -1,0 +1,107 @@
+﻿@model AddNewProductViewModel;
+
+
+
+
+
+<div class="bg-white pb-4 pt-4">
+
+
+
+	<div class="row">
+
+		<div class="col-md-6 mx-auto">
+			<h1 class="mt-4 mb-2">Edit product here...</h1>
+
+			<form method="post" asp-action="EditProductInformation" asp-controller="Products" >
+
+				<input type="hidden" asp-for="NewProduct.Id" />
+				<div class="mb-4 mt-4">
+
+
+
+					<select asp-for="NewProduct.Category.Name" class="form-select">
+
+						@foreach (var category in Model.Categories)
+						{
+
+
+							<option value=@category.Name>@category.Name</option>
+
+						}
+
+					</select>
+					<span asp-validation-for="NewProduct.Category.Name" class="text-danger"></span>
+
+
+
+
+
+				</div>
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.Name, "Name", new { @class = "body-sm-bold mb-2" })
+					@Html.TextBoxFor(m => m.NewProduct.Name, new { @class = "form-control textbox", maxlength = "50", autocomplete = "off" })
+					<span asp-validation-for="NewProduct.Name" class="text-danger"></span>
+				</div>
+
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.Price, "Price", new { @class = "body-sm-bold mb-2" })
+					@Html.TextBoxFor(m => m.NewProduct.Price, new { @class = "form-control textbox", autocomplete = "off" })
+					<span asp-validation-for="NewProduct.Price" class="text-danger"></span>
+				</div>
+
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.InStock, "In Stock?", new { @class = "body-sm-bold mb-2" })
+					<select asp-for="NewProduct.InStock" class="form-select">
+
+
+
+						<option value="@true">yes</option>
+						<option value="@false">No</option>
+
+
+					</select>
+					<span asp-validation-for="NewProduct.InStock" class="text-danger"></span>
+				</div>
+
+				<div class="mb-4 mt-4">
+
+					@Html.LabelFor(m => m.NewProduct.ImageUrl, "Insert Image URl", new { @class = "body-sm-bold mb-2" })
+					@Html.TextBoxFor(m => m.NewProduct.ImageUrl, new { @class = "form-control textbox", autocomplete = "off" })
+					<span asp-validation-for="NewProduct.ImageUrl" class="text-danger"></span>
+
+				</div>
+
+
+
+				<!-- Submit form buttons -->
+
+
+				<div class=" d-flex align-items-center justify-content-center gap-3">
+
+					<button id="Submit-btn" type="submit" class="bg-light">
+						Save
+					</button>
+
+
+					<button id="Cancel-btn" class="bg-white">
+						Cancel
+					</button>
+
+
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+
+
+
+
+</div>
+
+

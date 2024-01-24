@@ -6,32 +6,50 @@
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.js"></script>
 
 
+<style>
+	td,th{
+		padding:10px;
+	}
+</style>
+
+<!--Navigation lINKS-->
+
+@*   <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="EditProductPage" type="hidden"></a> *@
+
+
+@* 
+@if(Model.SelectedProduct != null)
+{
+	<partial name="_EditProductModalPartial" model=@Model />
+}
+ *@
 
 
 <!-- Edit product Modal -->
-@* 
+
 <button id="EditProductModalButton" style="display: none;"
 		data-bs-toggle="modal" data-bs-target="#EditProductModal">
-</button> *@
+</button>
+
+<div class="modal fade" id="EditProductModal" tabindex="-1">
+	<div class="modal-dialog" style="max-width: 700px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5">Edit product Information: </h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+			<div class="modal-body" id="modal-content">
 
 
-
-@* <partial name="_EditProductModalPartial" model="@SelectedProduct" /> *@
-
-<div id="editModal" class="modal">
-	<div class="modal-content">
-		<form id="editForm">
-
-
-			<!-- Your form fields go here -->
-			<button type="submit">Save</button>
-		</form>
+			</div>
+		
+		</div>
 	</div>
 </div>
 
 
-
-<h2>Edit product's Information: </h2>
+<h2 class="mb-3">Edit product's Information: </h2>
 
 
 
@@ -68,8 +86,8 @@
 					<td>@(product.InStock ? "Yes" : "No")</td>
 					<td>@product.Category.Name</td>
 					<td class="d-flex gap-4 w-100">
-						<button class="edit-button" data-product-id="@product.Id">Edit</button>
-					
+						@* <button class="edit-button" data-product-id="@product.Id">Edit</button> *@
+						<a class="nav-link text-dark btn btn-light" asp-area="" asp-controller="Products" asp-action="EditProductPage" asp-route-id="@product.Id">Edit</a>
 						<button class="btn btn-danger text-white">
 							Delete
 						</button>
@@ -84,7 +102,7 @@
 
 <script>
 	var table = $('#productsTable').DataTable({
-	
+
 	});
 
 	$('#SelctedCategory').change(function () {
@@ -94,26 +112,38 @@
 		table.column(3).search(selectedCategory).draw();
 	});
 
-	// function ShowEditProduct(productId) {
 
-
-	// 	var EditModalButton = document.getElementById("EditProductModalButton");
-
-	// 	EditModalButton.click();
-
-	// }
 
 	// Step 3: Fetch product data and show the modal
-	$('.edit-button').on('click', function () {
+	$('.edit-button').on('click', async function () {
 		var productId = $(this).data('product-id');
 
-		$.get('/Products/GetProductById/' + productId, function (data) {
+
+
+		await $.get('/Products/GetProductById/' + productId, function (data) {
 			// Populate your form fields with the product data
-			console.log(data)
-			// Then show the modal
-			$('#editModal').show();
+
+			 console.log(data);
+
+
+			// $('#EditProductModal .modal-body').html(data);
+
+
+			// var EditModalButton = document.getElementById("EditProductModalButton");
+			// EditModalButton.click();
+
+		
 		});
-	});
+
 	
+
+
+
+
+
+	
+
+	});
+
 
 </script>

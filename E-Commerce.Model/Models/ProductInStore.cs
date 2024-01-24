@@ -5,7 +5,7 @@ namespace E_Commerce_CORE_MVC.Models
 {
 	public class ProductInStore
 	{
-
+	
 		public int Id { get; set; }
 		public string Name { get; set; }
 
@@ -17,11 +17,12 @@ namespace E_Commerce_CORE_MVC.Models
 
 
 		public Wishlist? Wishlist { get; set; }
-		public CategoryModel Category { get; set; }
-		public Product? NewProduct { get; }
 
-	
+		public Category Category { get; set; }
 
-		
-	}
+
+
+
+
+    }
 }

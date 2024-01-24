@@ -57,5 +57,18 @@ namespace E_Commerce.Services
 			
 			return SelectedProduct;
 		}
+
+		public async Task EditProduct(ProductInStore Selectedproduct)
+		{
+
+			var mappedProduct = _mapper.Map<Product>(Selectedproduct);
+
+
+
+
+			await _productsRepository.EditProduct(mappedProduct);
+
+
+		}
 	}
 }

@@ -18,5 +18,13 @@ namespace E_Commerce.Services
 		Task<IEnumerable<CategoryModel>> GetCategories();
 
 		Task<ProductInStore?> GetProductById(int id);
+
+
+		Task EditProduct(ProductInStore product);
+
+
+
+
+
 	}
 }
