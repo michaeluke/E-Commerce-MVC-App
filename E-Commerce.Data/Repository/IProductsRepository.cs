@@ -23,5 +23,8 @@ namespace E_Commerce.Data.Repository
 
 
 		Task EditProduct(Product product);
+
+
+		Task DeleteProduct(int id);
 	}
 }

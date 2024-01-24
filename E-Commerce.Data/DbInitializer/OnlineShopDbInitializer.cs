@@ -51,6 +51,9 @@ namespace E_Commerce.Data.DbInitializer
 			var seededProducts = context.Products.Where(p => p.Name == "Bike" || p.Name == "Pan" || p.Name == "Couch");
 			context.Products.RemoveRange(seededProducts);
 
+			// Remove seeded products
+			var seededCategoires = context.Categories.Where(c => c.Name == "Sports" || c.Name == "Kitchen" || c.Name == "Furniture");
+			context.Categories.RemoveRange(seededCategoires);
 
 			context.SaveChanges();
 		}

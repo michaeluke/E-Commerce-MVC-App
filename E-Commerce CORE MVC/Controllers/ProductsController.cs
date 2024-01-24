@@ -79,7 +79,7 @@ namespace E_Commerce_CORE_MVC.Controllers
 
 				var categories = await _productService.GetCategories();
 				//this should be in services...
-				var modelView = new AddNewProductViewModel(categories, product);
+				var modelView = new EditProductInformation(categories, product);
 
 				return View(modelView);
 
@@ -132,5 +132,25 @@ namespace E_Commerce_CORE_MVC.Controllers
 
 		
 		}
+
+
+
+
+
+		public async Task<IActionResult> DeleteProduct(int id)
+		{
+			if (ModelState.IsValid)
+			{
+
+
+				await _productService.DeleteProduct(id);
+				// After deleting the item, redirect to another action (the index page)
+				return RedirectToAction("Index", "Home");
+			}
+
+			return BadRequest();
+
+		}
+
 	}
 }

@@ -101,7 +101,7 @@ namespace E_Commerce.Data.Repository
 				SelectedProduct.Category = category;
 
 				SelectedProduct.Price = product.Price;
-				SelectedProduct.Name	= product.Name;
+				SelectedProduct.Name = product.Name;
 				SelectedProduct.ImageUrl = product.ImageUrl;
 				SelectedProduct.InStock = product.InStock;
 
@@ -110,6 +110,22 @@ namespace E_Commerce.Data.Repository
 				_onlineShopDb.Products.Update(SelectedProduct);
 
 				// Save the changes to the database
+				_onlineShopDb.SaveChanges();
+			}
+
+
+		}
+
+		public async Task DeleteProduct(int id)
+		{
+			var SelectedProduct = await _onlineShopDb.Products
+	  .Include(p => p.Category)
+	  .SingleOrDefaultAsync(p => p.Id == id);
+
+			if (SelectedProduct != null)
+			{
+				_onlineShopDb.Remove(SelectedProduct);
+
 				_onlineShopDb.SaveChanges();
 			}
 

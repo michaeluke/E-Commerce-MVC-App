@@ -50,7 +50,7 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
-//OnlineShopDbInitializer.Unseed(app);
+OnlineShopDbInitializer.Unseed(app);
 
 OnlineShopDbInitializer.Seed(app);
 app.Run();

@@ -23,7 +23,7 @@ namespace E_Commerce.Services
 		Task EditProduct(ProductInStore product);
 
 
-
+		Task DeleteProduct(int id);
 
 
 	}

@@ -70,5 +70,14 @@ namespace E_Commerce.Services
 
 
 		}
+
+		public async Task DeleteProduct(int id)
+		{
+
+
+			await _productsRepository.DeleteProduct(id);
+
+
+		}
 	}
 }
