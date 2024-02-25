@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace E_Commerce_CORE_MVC.Controllers
 {
 	//[Authorize("ManageCustomers")]
-	[AllowAnonymous]
+	//[AllowAnonymous]
+	[Authorize]
 	public class ProductsController : Controller
 	{
 		//use service here instead of repo
