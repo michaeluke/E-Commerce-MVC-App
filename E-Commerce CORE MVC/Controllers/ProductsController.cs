@@ -2,10 +2,13 @@
 using E_Commerce.Services;
 using E_Commerce.ViewModels.ModelsView;
 using E_Commerce_CORE_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce_CORE_MVC.Controllers
 {
+	//[Authorize("ManageCustomers")]
+	[AllowAnonymous]
 	public class ProductsController : Controller
 	{
 		//use service here instead of repo
@@ -17,6 +20,19 @@ namespace E_Commerce_CORE_MVC.Controllers
 			_productService = productService;
 
 		}
+
+
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+
+			return View();
+
+        }
+
+
+
+		[Authorize("ManageCustomers")]
 		public async Task<IActionResult> AddNewProduct()
 		{
 			var categories = await _productService.GetCategories();
@@ -26,6 +42,8 @@ namespace E_Commerce_CORE_MVC.Controllers
 
 		}
 
+		//Authorize is a markup interface that generates the meta data for authorization..
+	
 
 		public async Task<IActionResult> EditProducts()
 		{
@@ -67,7 +85,7 @@ namespace E_Commerce_CORE_MVC.Controllers
 
 
 		[HttpGet]
-
+	
 		public async Task<IActionResult> EditProductPage(int id)
 		{
 			var product = await _productService.GetProductById(id);

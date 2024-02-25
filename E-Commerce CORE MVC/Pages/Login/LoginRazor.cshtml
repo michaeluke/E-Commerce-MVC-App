@@ -1,0 +1,68 @@
+﻿@page
+@model E_Commerce_CORE_MVC.Pages.Login.LoginModel
+@{
+}
+
+
+
+﻿@{
+	ViewBag.Title = "Signup Page";
+
+
+}
+
+
+
+<div class="row">
+
+	<div class="col-md-6 mx-auto">
+		<h1 class="header-semibold botSettings-Wrapper__Title">Login Page:	</h1>
+
+		<form method="post" id="Login-form" role="form">
+			<div class="mb-4 d-flex flex-column gap-2">
+
+				<label>UserName:</label>
+
+				<input class="w-50" name="UserName" required="True" autocomplete="off" />
+			</div>
+
+
+			<div class="mb-4 d-flex flex-column gap-2">
+
+				<label>Password:</label>
+
+				<input class="w-50" name="Password" required="True" autocomplete="off" />
+			</div>
+
+
+			<!-- Submit form buttons -->
+
+
+			<div class=" d-flex align-items-center justify-content-start gap-3">
+
+				<button id="Submit-btn" type="submit">
+					Save
+				</button>
+
+
+				<button id="Cancel-btn" onclick="window.location='/BotSettings'">
+					Cancel
+				</button>
+
+
+			</div>
+		</form>
+	</div>
+
+
+	<div>
+		<a asp-page="/Login/Google"
+		   asp-route-returnurl="@Model.ReturnUrl">
+			Sign In with Google!
+		</a>
+	</div>
+
+
+</div>
+
+

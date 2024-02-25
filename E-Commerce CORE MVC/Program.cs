@@ -4,6 +4,7 @@ using E_Commerce.Data.Repository;
 using E_Commerce.Services;
 using E_Commerce.ViewModels.AutoMapper;
 using E_Commerce_CORE_MVC.MyDbContext;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,12 +25,76 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options =>
 });
 
 
+
+//if i wanted to use the razor pages i have to add it to services using ...
+builder.Services.AddRazorPages();
+
+
+builder.Services.AddAuthentication("cookie")
+	//very explicit way of coding...
+	.AddCookie(authenticationScheme: "cookie", optionsInstance =>
+	{
+		optionsInstance.Cookie.Name = "demo";
+		optionsInstance.ExpireTimeSpan = TimeSpan.FromHours(8);
+
+		optionsInstance.LoginPath = "/Login/LoginRazor";
+
+		optionsInstance.AccessDeniedPath = "/Login/AccessDenied";
+		//optionsInstance.ReturnUrlParameter = "/";
+
+	})
+	.AddGoogle("Google", o =>
+	{
+		o.ClientId = "731422978590-tl0flhj10pvtm103uulqm86l72hs1dps.apps.googleusercontent.com";
+		o.ClientSecret = "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";
+
+		//by default ths path will be (the callback path) => /signin-google
+
+		//you can change the value...
+		//o.CallbackPath = "/signin-google";
+
+
+		//how to validate and what comes back ,,, then start a session using our cookie handler...
+
+		//so basically the google handler will hand of the session management to another handler that is cookie handler..
+
+
+		// basically you are saying once you're done here... once you're done validating user from google.. add the cookie..
+
+		//the cookie handler is a way to start session but in the first demo we should've compared the values submitted by user in the form and compare it with thte database..
+		
+		//if we comment it out it will configure whatever is the default scheme..
+		
+		//o.SignInScheme = "cookie";
+
+
+	});
+
+
+
+
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("ManageCustomers", policy =>
+	{
+		policy.RequireAuthenticatedUser();
+
+		policy.RequireClaim("department", "sales");
+
+		policy.RequireClaim("status", "senior");
+
+	});
+});
+
+
 //Start Auto Mapper Configurations
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+//creating the application host..
 var app = builder.Build();
 
 
+//adding a bunch of middlewares...
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -39,18 +104,41 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
+//redirecting http request to https.
 app.UseHttpsRedirection();
+
+
+
+
+// uses a bunch of files. in wwwroot js , css etc..
 app.UseStaticFiles();
 
+//turn incoming urls to endpoints..
 app.UseRouting();
 
+// maps endpoints to the pages we have in the project... but again this is for razor pages.. (and since we're using mvc only (views) we don't need it)...
+app.MapRazorPages()
+	.RequireAuthorization();
+//if i made this it will mean that all razorpages will require authroization
+//app.MapRazorPages().RequireAuthorization();
+
+
+//you have to use the app.UseAuthentication middleware before the authorization middleware.
+
+
+//useAuthentication middleware gets the incoming request and tries to get a user object (claim)
+
+app.UseAuthentication();
 app.UseAuthorization();
+
+
+
 
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
-OnlineShopDbInitializer.Unseed(app);
+//OnlineShopDbInitializer.Unseed(app);
 
 OnlineShopDbInitializer.Seed(app);
 app.Run();

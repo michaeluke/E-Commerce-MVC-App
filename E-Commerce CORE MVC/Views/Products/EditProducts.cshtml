@@ -63,6 +63,15 @@
 </div>
 
 
+<h1>User claims</h1>
+
+@foreach(var claim in User.Claims)
+{
+	
+	<h1>@claim.Type</h1>
+	<h2>@claim.Value</h2>
+
+}
 <h2 class="mb-3">Edit product's Information: </h2>
 
 

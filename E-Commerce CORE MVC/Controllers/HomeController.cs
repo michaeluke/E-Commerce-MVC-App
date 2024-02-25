@@ -1,11 +1,13 @@
 ﻿using E_Commerce.Data.Repository;
 using E_Commerce.Services;
 using E_Commerce.ViewModels.ModelsView;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce_CORE_MVC.Controllers
 {
+    [AllowAnonymous]
 	public class HomeController : Controller
 	{
         //use service here instead of repo
@@ -19,6 +21,7 @@ namespace E_Commerce_CORE_MVC.Controllers
         }
 
 
+		//Home page
         public async Task<IActionResult> Index()
         {
 
@@ -28,7 +31,9 @@ namespace E_Commerce_CORE_MVC.Controllers
 			return View(modelView);
 		}
 
-	
 
-	}
+      
+
+
+    }
 }

@@ -1,0 +1,13 @@
+﻿@page
+@model ChatBot.Web.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h2 class="text-danger">Something went wrong</h2>
+
+<p>
+    @Model.ErrorMessage
+</p>
+
+<button class="btn btn-primary" onclick="history.back()">Back</button>

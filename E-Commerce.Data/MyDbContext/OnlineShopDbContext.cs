@@ -24,6 +24,8 @@ namespace E_Commerce_CORE_MVC.MyDbContext
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
+			//using fluent api to establish relationships between entities
+
 
 			modelBuilder.Entity<User>()
 			.HasOne(u => u.WishList)
