@@ -5,6 +5,7 @@ using E_Commerce.Services;
 using E_Commerce.ViewModels.AutoMapper;
 using E_Commerce_CORE_MVC.MyDbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,8 +31,21 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options =>
 builder.Services.AddRazorPages();
 
 
-builder.Services.AddAuthentication("cookie")
+// you can introduce a temporary .. second cookie..
+
+
+//builder.Services.AddAuthentication("cookie")
+
+//first configuring or setting up the authentication service..
+builder.Services.AddAuthentication(o =>
+{
+	o.DefaultScheme = "cookie";
+
+	o.DefaultChallengeScheme = "oidc";
+
+})
 	//very explicit way of coding...
+	//first authentication handler that handles the session management..
 	.AddCookie(authenticationScheme: "cookie", optionsInstance =>
 	{
 		optionsInstance.Cookie.Name = "demo";
@@ -43,32 +57,76 @@ builder.Services.AddAuthentication("cookie")
 		//optionsInstance.ReturnUrlParameter = "/";
 
 	})
-	.AddGoogle("Google", o =>
+	// second authentication handler which adds the protocol we want to use...
+	.AddOpenIdConnect("oidc" , o =>
 	{
-		o.ClientId = "731422978590-tl0flhj10pvtm103uulqm86l72hs1dps.apps.googleusercontent.com";
-		o.ClientSecret = "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";
+		o.Authority = "https://demo.duendesoftware.com/";
+		//o.ClientId = "login";
 
-		//by default ths path will be (the callback path) => /signin-google
+		o.ClientId = "interactive.confidential";
 
-		//you can change the value...
-		//o.CallbackPath = "/signin-google";
+		o.ClientSecret = "secret";
 
+		o.ResponseType = "code";
 
-		//how to validate and what comes back ,,, then start a session using our cookie handler...
-
-		//so basically the google handler will hand of the session management to another handler that is cookie handler..
+		o.ResponseMode = "query";
 
 
-		// basically you are saying once you're done here... once you're done validating user from google.. add the cookie..
 
-		//the cookie handler is a way to start session but in the first demo we should've compared the values submitted by user in the form and compare it with thte database..
+
+		o.Scope.Clear();
+
+		o.Scope.Add("openid");
+
+		o.Scope.Add("profile");
+		o.Scope.Add("email");
+		o.Scope.Add("api");
+		o.Scope.Add("offline_access");
+
+		o.SaveTokens = true;
+		//o.ClaimActions.Clear();
+
+		//removes mapped values 
+		o.MapInboundClaims = false;
+
+
+		o.Events = new OpenIdConnectEvents()
+		{
+			//OnRedirectToIdentityProvider = "";
+			//OnRedirectToIdentityProviderForSignOut = "";
 		
-		//if we comment it out it will configure whatever is the default scheme..
-		
-		//o.SignInScheme = "cookie";
+			
+		};
 
 
 	});
+	//.AddCookie("temp")
+	//.AddGoogle("Google", o =>
+	//{
+	//	o.ClientId = "731422978590-tl0flhj10pvtm103uulqm86l72hs1dps.apps.googleusercontent.com";
+	//	o.ClientSecret = "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";
+
+//	//by default ths path will be (the callback path) => /signin-google
+
+//	//you can change the value...
+//	//o.CallbackPath = "/signin-google";
+
+
+//	//how to validate and what comes back ,,, then start a session using our cookie handler...
+
+//	//so basically the google handler will hand of the session management to another handler that is cookie handler..
+
+
+//	// basically you are saying once you're done here... once you're done validating user from google.. add the cookie..
+
+//	//the cookie handler is a way to start session but in the first demo we should've compared the values submitted by user in the form and compare it with thte database..
+
+//	//if we comment it out it will configure whatever is the default scheme which is cookie..
+
+//	o.SignInScheme = "temp";
+
+
+//});
 
 
 

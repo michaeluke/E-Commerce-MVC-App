@@ -5,32 +5,45 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace E_Commerce_CORE_MVC.Pages.Login
 {
-    [AllowAnonymous]
-    public class GoogleModel : PageModel
-    {
-        public IActionResult OnGet(string ReturnUrl)
-        {
-            //await HttpContext.ChallengeAsync("Google");
+	[AllowAnonymous]
+	public class GoogleModel : PageModel
+	{
+		public IActionResult OnGet(string ReturnUrl)
+		{
+			//await HttpContext.ChallengeAsync("Google");
 
-            //basically microsoft created action results for us..
+			//basically microsoft created action results for us..
 
 
 
-            // 2 things  ... 1 => always check that returned url is local ..
-            // second you can always add additional properties so that you can later use in the cookie session..
+			// 2 things  ... 1 => always check that returned url is local ..
+			// second you can always add additional properties so that you can later use in the cookie session..
 
-            if(!Url.IsLocalUrl(ReturnUrl))
-            {
-                throw new Exception("Invalid return url");
-            }
+			if (!Url.IsLocalUrl(ReturnUrl))
+			{
+				throw new Exception("Invalid return url");
+			}
 
-            var props = new AuthenticationProperties
-            {
-                RedirectUri = ReturnUrl
-            };
+			var props = new AuthenticationProperties
+			{
 
-            //and then pass it to the challenge action method..
-            return Challenge(props, "Google");
-        }
-    }
+
+				RedirectUri = Url.Page("/Callback"),
+
+
+				Items =  {
+				{ "uru" , ReturnUrl },
+				{ "scheme" , "temp"}
+
+				}
+
+
+			};
+
+
+
+			//and then pass it to the challenge action method..
+			return Challenge(props, "Google");
+		}
+	}
 }

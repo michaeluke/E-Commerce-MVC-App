@@ -9,8 +9,24 @@
 
 @foreach (var claim in User.Claims)
 {
-
+	<p> ....</p>
 	<h1>@claim.Type</h1>
 	<h2>@claim.Value</h2>
+
+
+ 
+
+}
+
+<h1>metadata</h1>
+
+@foreach (var metadata in Model.Session.Metadata)
+{
+
+	<p>.....</p>
+	<h1>@metadata.Key</h1>
+
+	<h2>@metadata.Value</h2>
+
 
 }
